@@ -2,10 +2,11 @@
 const serverless=require('serverless-http')
 const express=require('express')
 const  morgan=require('morgan')
+const cors=require('cors')
 const router=require('../routes/router')
 
 const app=express()
-
+app.use(cors())
 app.use(express.json())
 
 morgan.token('body',function(req,res){
