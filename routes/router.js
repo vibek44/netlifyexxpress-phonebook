@@ -26,21 +26,22 @@ let persons=[
   }
 ]
 
-/*router.get('/', (req,res)=>{
-    res.send('<h1>Welcome home</h1>')
-})*/
 
-router.get('/api/persons', (req,res)=>{
-    res.json(persons)
+router.get('/', (req,res)=>{
+  if(req.baseUrl==='/api/persons'){
+     res.json(persons)
+   }
+
+  if(req.baseUrl==='/info'){
+     res.send(`<!DOCTYPE html> <html> <head> <title>Phonebook</title>`+
+     `</head><body><p>phonebook has info for ${persons.length} people</p>`+
+     `<p>${ new Date()}</p></body> </html>`)
+  }
+
 })
 
-router.get('/info', (req,res)=>{
-  res.send(`<!DOCTYPE html> <html> <head> <title>Phonebook</title>`+
-  `</head><body><p>phonebook has info for ${persons.length} people</p>`+
-  `<p>${ new Date()}</p></body> </html>`)
-})
 
-router.get('/api/persons/:id', (req,res)=>{
+router.get('/:id', (req,res)=>{
   const id=Number(req.params.id)
   const person=persons.find((person)=>person.id===id)
   if(!person){
@@ -53,7 +54,7 @@ const generateId=()=>{
   return Math.floor(Math.random()*10000)
 }
 
-router.post('/api/persons',(req,res)=>{
+router.post('/',(req,res)=>{
   const body=req.body
   if(!(body.name && body.number)){
     return res.status(404).json({error:'name or number is missing'})
@@ -73,7 +74,16 @@ router.post('/api/persons',(req,res)=>{
 
 })
 
-router.delete('/api/persons/:id', (req,res)=>{
+router.put('/:id',(req,res)=>{
+  const obj=req.body
+  const id=Number(req.params.id)
+   persons=persons.map((person)=>person.id!==id?person:obj)
+   res.json(obj)
+   
+
+})
+
+router.delete('/:id', (req,res)=>{
     const id=Number(req.params.id)
     persons=persons.filter((person)=>person.id!==id)
     res.status(204).end()
