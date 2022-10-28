@@ -74,7 +74,7 @@ router.post('/',(req,res)=>{
 
 })
 
-router.put('/:id',(req,res)=>{
+router.put('/:idre',(req,res)=>{
   const obj=req.body
   const id=Number(req.params.id)
    persons=persons.map((person)=>person.id!==id?person:obj)
