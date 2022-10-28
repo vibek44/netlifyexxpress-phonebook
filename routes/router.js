@@ -26,9 +26,9 @@ let persons=[
   }
 ]
 
-router.get('/', (req,res)=>{
+/*router.get('/', (req,res)=>{
     res.send('<h1>Welcome home</h1>')
-})
+})*/
 
 router.get('/api/persons', (req,res)=>{
     res.json(persons)
